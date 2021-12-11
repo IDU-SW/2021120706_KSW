@@ -1,19 +1,34 @@
-// components/TodoListCell.js
 import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
+Icon.loadFont();
 
-const TodoListCell = () => {
+const TodoListItem = ({textValue, id, checked, onRemove, onToggle}) => {
   return (
     <View style={styles.container}>
-      <TouchableOpacity>
-        <View style={styles.completeCircle}>
-          <Icon name="checkcircleo" size={30} color="#3143e8" />
-        </View>
+      <TouchableOpacity onPressOut={onToggle(id)}>
+        {checked ? (
+          <View style={styles.completeCircle}>
+            <Icon name="circledowno" size={30} color="#3143e8" />
+          </View>
+        ) : (
+          <View style={styles.circle} />
+        )}
       </TouchableOpacity>
-      <Text style={[styles.text, styles.strikeText]}>
-        Items will be shown here
+      <Text
+        style={[
+          styles.text,
+          checked ? styles.strikeText : styles.unstrikeText,
+        ]}>
+        {textValue}
       </Text>
+      <View style={styles.buttons}>
+        <TouchableOpacity style={styles.buttonContainer}>
+          <Text style={styles.buttonText} onPress={onRemove(id)}>
+            <Icon name="delete" size={30} color="#e33057" />
+          </Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -54,10 +69,13 @@ const styles = StyleSheet.create({
   unstrikeText: {
     color: '#29323c',
   },
+  buttons: {
+    flexDirection: 'row',
+  },
   buttonContainer: {
     marginVertical: 10,
     marginHorizontal: 10,
   },
 });
 
-export default TodoListCell;
+export default TodoListItem;
