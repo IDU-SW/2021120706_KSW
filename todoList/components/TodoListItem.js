@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
+
 Icon.loadFont();
 
 const TodoListItem = ({textValue, id, checked, onRemove, onToggle}) => {
